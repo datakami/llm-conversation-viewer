@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-gray-100 p-4 md:p-8 {% block body_class %}{% endblock %}">
+  {% block content %}
+  {% endblock %}
+<script>
+    // Format all timestamps on the page
+    document.querySelectorAll('[data-timestamp]').forEach(element => {
+        const timestamp = element.getAttribute('data-timestamp');
+        if (timestamp) {
+            const date = new Date(timestamp);
+
+            // Format as YYYY-MM-DD HH:mm
+            const formatted = date.toLocaleString('en-GB', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$2-$1'); // Convert DD/MM/YYYY to YYYY-MM-DD
+
+            element.textContent = formatted;
+        }
+    });
+</script>
+</body>
+</html>
